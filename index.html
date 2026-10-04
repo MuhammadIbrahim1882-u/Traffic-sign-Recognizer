@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign recognizer | Self-driving vision</title>
-  <link rel="stylesheet" href="./static/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header class="top">
@@ -12,8 +12,20 @@
       <h1>Sign recognizer</h1>
       <p class="lede">Show the car a road sign or a street scene and see what it decides to do.</p>
     </div>
-    <p class="pill pill-ok" id="modelPill">Model ready</p>
+    {% if model_ready %}
+      <p class="pill pill-ok" id="modelPill">Model ready</p>
+    {% else %}
+      <p class="pill pill-warn" id="modelPill">Model not trained</p>
+    {% endif %}
   </header>
+
+  {% if not model_ready %}
+  <div class="notice" role="status">
+    <strong>The model is not trained yet.</strong>
+    Open a terminal in the project folder and run <code>python train.py</code>, then restart this app.
+    <span class="detail">{{ model_error }}</span>
+  </div>
+  {% endif %}
 
   <main class="grid">
     <section class="panel camera-panel" aria-label="Image input">
@@ -68,6 +80,6 @@
     <p>Concept demo trained on traffic sign images. It is not a certified driving system.</p>
   </footer>
 
-  <script src="./static/script.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
