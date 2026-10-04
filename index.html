@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign recognizer | Self-driving vision</title>
+  <link rel="stylesheet" href="./static/style.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Sign recognizer</h1>
+      <p class="lede">Show the car a road sign or a street scene and see what it decides to do.</p>
+    </div>
+    <p class="pill pill-ok" id="modelPill">Model ready</p>
+  </header>
+
+  <main class="grid">
+    <section class="panel camera-panel" aria-label="Image input">
+      <div class="mode" role="group" aria-label="What is in the image">
+        <button type="button" class="mode-btn" data-mode="sign" aria-pressed="true">Single sign</button>
+        <button type="button" class="mode-btn" data-mode="scene" aria-pressed="false">Road scene</button>
+      </div>
+
+      <div class="viewfinder" id="viewfinder">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+
+        <label class="drop" id="drop" for="fileInput" tabindex="0">
+          <span class="drop-title">Drop an image here</span>
+          <span class="drop-sub">or click to choose a PNG, JPG or BMP</span>
+        </label>
+        <img id="preview" alt="Selected image" hidden>
+        <video id="video" playsinline muted hidden></video>
+        <div class="scan" aria-hidden="true"></div>
+        <div class="busy" id="busy" hidden><span class="spinner"></span>Analyzing</div>
+      </div>
+
+      <input type="file" id="fileInput" accept="image/png,image/jpeg,image/bmp,image/webp" hidden>
+
+      <div class="actions">
+        <button type="button" class="btn" id="chooseBtn">Choose image</button>
+        <button type="button" class="btn btn-ghost" id="cameraBtn">Use camera</button>
+        <button type="button" class="btn btn-accent" id="captureBtn" hidden>Capture and analyze</button>
+        <button type="button" class="btn btn-ghost" id="closeCameraBtn" hidden>Close camera</button>
+      </div>
+      <p class="hint" id="modeHint">Single sign: use a close-up photo where the sign fills most of the picture.</p>
+    </section>
+
+    <section class="panel decision" id="decision" data-level="idle" aria-live="polite">
+      <p class="chip" id="levelChip">Waiting for an image</p>
+      <h2 id="decisionText">No decision yet</h2>
+      <p class="sign-name" id="signName"></p>
+
+      <div class="meter" id="meter" hidden>
+        <div class="meter-head"><span>Confidence</span><strong id="confValue">0%</strong></div>
+        <div class="bar"><span id="confBar"></span></div>
+      </div>
+
+      <ul class="top3" id="topList" hidden></ul>
+      <ul class="found" id="foundList" hidden></ul>
+
+      <p class="empty" id="emptyText">Add an image on the left. The car's decision appears here, with the sign it recognized and how sure it is.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Concept demo trained on traffic sign images. It is not a certified driving system.</p>
+  </footer>
+
+  <script src="./static/script.js"></script>
+</body>
+</html>
